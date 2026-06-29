@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       4. 信封開場翻開動態
+       4. 信封開場翻開動態（已完美加入 pointerEvents 穿透修復）
        ========================================================================== */
     const openBtn = document.getElementById('open-btn');
     const envelopeContainer = document.getElementById('envelope-container');
@@ -74,6 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 envelopeContainer.classList.add('fade-out');
                 mainSite.classList.remove('hidden');
                 
+                // 這裡幫你補上了穿透點擊，信封開了之後按鈕才點得到
+                envelopeContainer.style.pointerEvents = 'none'; 
+                
                 setTimeout(() => {
                     envelopeContainer.style.display = 'none';
                 }, 600);
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================================================
-       5. 繪本作品翻頁控制
+       5. 繪本作品翻頁控制（images/ 資料夾 ＋ 圖片自動串接修正版）
        ========================================================================== */
     const prevPageBtn = document.getElementById('prev-page');
     const nextPageBtn = document.getElementById('next-page');
@@ -91,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageIndicator = document.getElementById('page-indicator');
 
     let currentBookState = 0; 
-    const maxStates = 12;
+    const maxStates = 12; // 👈 如果繪本不含封面封底是24頁，這裡維持 12。如果是 16 頁，請改成 8
 
     function updateBookUI() {
         leftPage.style.opacity = '0.3';
@@ -100,41 +103,33 @@ document.addEventListener('DOMContentLoaded', () => {
         rightPage.style.transform = 'rotateY(-15deg)';
         
         setTimeout(() => {
-function updateBookUI() {
-    leftPage.style.opacity = '0.3';
-    rightPage.style.opacity = '0.3';
-    leftPage.style.transform = 'rotateY(15deg)';
-    rightPage.style.transform = 'rotateY(-15deg)';
-    
-    setTimeout(() => {
-        // 狀態 0：顯示封面與第 1 頁
-        if (currentBookState === 0) {
-            leftPage.innerHTML = `<img src="book-cover.jpg" alt="封面" style="width:100%; height:100%; object-fit:cover; display:block;">`;
-            rightPage.innerHTML = `<img src="book-p1.jpg" alt="第1頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
-            pageIndicator.innerText = "封面 / 第 1 頁";
-        } 
-        // 最終狀態：顯示最後一頁與封底 (假設你設定的 maxStates 是最後一頁)
-        else if (currentBookState === maxStates) {
-            let pLeft = currentBookState * 2;
-            leftPage.innerHTML = `<img src="book-p${pLeft}.jpg" alt="第${pLeft}頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
-            rightPage.innerHTML = `<img src="book-back.jpg" alt="封底" style="width:100%; height:100%; object-fit:cover; display:block;">`;
-            pageIndicator.innerText = `第 ${pLeft} 頁 / 封底`;
-        } 
-        // 中間頁數：自動計算並帶入對應的 book-p(頁碼).jpg 圖片
-        else {
-            let pLeft = currentBookState * 2;
-            let pRight = pLeft + 1;
-            leftPage.innerHTML = `<img src="book-p${pLeft}.jpg" alt="第${pLeft}頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
-            rightPage.innerHTML = `<img src="book-p${pRight}.jpg" alt="第${pRight}頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
-            pageIndicator.innerText = `第 ${pLeft} 頁 / 第 ${pRight} 頁`;
-        }
-        
-        leftPage.style.opacity = '1';
-        rightPage.style.opacity = '1';
-        leftPage.style.transform = 'none';
-        rightPage.style.transform = 'none';
-    }, 180);
-}
+            // 狀態 0：顯示封面與第 1 頁
+            if (currentBookState === 0) {
+                leftPage.innerHTML = `<img src="images/book-cover.jpg" alt="封面" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                rightPage.innerHTML = `<img src="images/book-p1.jpg" alt="第1頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                pageIndicator.innerText = "封面 / 第 1 頁";
+            } 
+            // 最終狀態：顯示最後一頁與封底
+            else if (currentBookState === maxStates) {
+                let pLeft = currentBookState * 2;
+                leftPage.innerHTML = `<img src="images/book-p${pLeft}.jpg" alt="第${pLeft}頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                rightPage.innerHTML = `<img src="images/book-back.jpg" alt="封底" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                pageIndicator.innerText = `第 ${pLeft} 頁 / 封底`;
+            } 
+            // 中間頁數：自動計算頁碼
+            else {
+                let pLeft = currentBookState * 2;
+                let pRight = pLeft + 1;
+                leftPage.innerHTML = `<img src="images/book-p${pLeft}.jpg" alt="第${pLeft}頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                rightPage.innerHTML = `<img src="images/book-p${pRight}.jpg" alt="第${pRight}頁" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                pageIndicator.innerText = `第 ${pLeft} 頁 / 第 ${pRight} 頁`;
+            }
+            
+            leftPage.style.opacity = '1';
+            rightPage.style.opacity = '1';
+            leftPage.style.transform = 'none';
+            rightPage.style.transform = 'none';
+        }, 180);
     }
 
     if (prevPageBtn && nextPageBtn && leftPage && rightPage && pageIndicator) {
@@ -155,4 +150,4 @@ function updateBookUI() {
             }
         });
     }
-});
+}); // 
