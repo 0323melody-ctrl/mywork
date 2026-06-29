@@ -33,24 +33,21 @@ body {
    修正後的互動區塊層級 (請直接覆蓋舊的 CSS)
    ========================================================================== */
 
-/* 1. 拼貼裝飾物：設為 pointer-events: none，讓滑鼠可以「穿透」它們去點底下的影片或連結 */
 .visible-collage-group {
     position: absolute;
     z-index: 50; 
     pointer-events: none;
 }
 
-/* 2. 確保你的所有「功能性元件」都在最上層 */
 .video-ratio-container, 
 .book-simulator, 
 .contact-grid, 
 .nav-links,
 .open-button {
     position: relative;
-    z-index: 100; /* 數字設得比拼貼裝飾物大，影片就一定能點到了 */
+    z-index: 100;
 }
 
-/* 3. 影片容器設定 (確保影片填滿框框) */
 .video-ratio-container {
     width: 100%;
     aspect-ratio: 5 / 3;
@@ -58,7 +55,7 @@ body {
     border-radius: 4px;
     overflow: hidden;
     box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
-    display: block; /* 確保它是區塊級元素 */
+    display: block;
 }
 
 .video-ratio-container video {
@@ -68,39 +65,18 @@ body {
     display: block;
 }
 
-/* 4. 強制游標恢復 (避免誤觸全域 cursor: none) */
 .video-ratio-container:hover,
 .nav-item-sticker:hover,
 .cute-sticker-btn:hover {
     cursor: pointer !important;
 }
-}
-}
 
-/* 1. 關於我區塊右側的綠色空白定位 */
-.gc-about-right {
-    right: 5%;
-    top: 22%;
-    width: 280px;
-    height: 380px;
-}
-
-/* 2. 動畫區塊左側的綠色空白定位 */
-.gc-animation-left {
-    left: 2%;
-    top: 15%;
-    width: 140px;
-    height: 200px;
-}
-
-/* 3. 聯絡我區塊上方的綠色大空白精準定位 */
-.gc-contact-top-blank {
-    left: 10%;
-    top: -70px;
-    width: 80%;
-    height: 140px;
-}
-
+/* ==========================================================================
+   裝飾物定位 (這部分在原先代碼中被錯誤的括號阻斷了，現已修復)
+   ========================================================================== */
+.gc-about-right { right: 5%; top: 22%; width: 280px; height: 380px; }
+.gc-animation-left { left: 2%; top: 15%; width: 140px; height: 200px; }
+.gc-contact-top-blank { left: 10%; top: -70px; width: 80%; height: 140px; }
 /* 拼貼風蘋果基礎核心結構 */
 .collage-apple {
     position: absolute;
