@@ -30,10 +30,18 @@ body {
    🌟 核心修改：image_6.png 低飽和手帳拼貼插圖元件（最高 z-index 頂層完全防遮擋版）
    ========================================================================== */
 /* 全域拼貼群組定位外殼：設為 z-index: 99，確保凌駕於所有白底卡片之上，完全在綠色背景上顯示 */
+/* 修改這裡，讓拼貼裝飾物完全不干擾滑鼠點擊 */
 .visible-collage-group {
     position: absolute;
     z-index: 99;
-    pointer-events: none;
+    pointer-events: none; /* 這行保留，確保滑鼠能穿透裝飾圖 */
+}
+
+/* --- 新增這一段，確保所有互動元件都在最上層 --- */
+.video-ratio-container, .book-simulator, .contact-grid, .nav-links {
+    position: relative;
+    z-index: 100; /* 確保這些互動區塊永遠浮在裝飾圖之上 */
+}
 }
 
 /* 1. 關於我區塊右側的綠色空白定位 */
