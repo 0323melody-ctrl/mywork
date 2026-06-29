@@ -29,18 +29,51 @@ body {
 /* ==========================================================================
    🌟 核心修改：image_6.png 低飽和手帳拼貼插圖元件（最高 z-index 頂層完全防遮擋版）
    ========================================================================== */
-/* 全域拼貼群組定位外殼：設為 z-index: 99，確保凌駕於所有白底卡片之上，完全在綠色背景上顯示 */
-/* 修改這裡，讓拼貼裝飾物完全不干擾滑鼠點擊 */
+/* ==========================================================================
+   修正後的互動區塊層級 (請直接覆蓋舊的 CSS)
+   ========================================================================== */
+
+/* 1. 拼貼裝飾物：設為 pointer-events: none，讓滑鼠可以「穿透」它們去點底下的影片或連結 */
 .visible-collage-group {
     position: absolute;
-    z-index: 99;
-    pointer-events: none; /* 這行保留，確保滑鼠能穿透裝飾圖 */
+    z-index: 50; 
+    pointer-events: none;
 }
 
-/* --- 新增這一段，確保所有互動元件都在最上層 --- */
-.video-ratio-container, .book-simulator, .contact-grid, .nav-links {
+/* 2. 確保你的所有「功能性元件」都在最上層 */
+.video-ratio-container, 
+.book-simulator, 
+.contact-grid, 
+.nav-links,
+.open-button {
     position: relative;
-    z-index: 100; /* 確保這些互動區塊永遠浮在裝飾圖之上 */
+    z-index: 100; /* 數字設得比拼貼裝飾物大，影片就一定能點到了 */
+}
+
+/* 3. 影片容器設定 (確保影片填滿框框) */
+.video-ratio-container {
+    width: 100%;
+    aspect-ratio: 5 / 3;
+    background-color: #333;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+    display: block; /* 確保它是區塊級元素 */
+}
+
+.video-ratio-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 4. 強制游標恢復 (避免誤觸全域 cursor: none) */
+.video-ratio-container:hover,
+.nav-item-sticker:hover,
+.cute-sticker-btn:hover {
+    cursor: pointer !important;
+}
 }
 }
 
