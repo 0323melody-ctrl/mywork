@@ -1,1 +1,394 @@
+/* ==========================================================================
+   核心色票與全域設定
+   ========================================================================== */
+:root {
+    --petal-rouge: #E27396;   
+    --pink-mist: #EB9AB2;     
+    --petal-frost: #EFCFE3;    
+    --beige: #ECF2D8;          
+    --light-blue: #B3DEE2;     
+    --text-dark: #3A3535;      
+    --white: #FFFFFF;
+}
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    cursor: none !important;
+}
+
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--beige);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==========================================================================
+   🌟 核心修改：image_6.png 低飽和手帳拼貼插圖元件（最高 z-index 頂層完全防遮擋版）
+   ========================================================================== */
+/* 全域拼貼群組定位外殼：設為 z-index: 99，確保凌駕於所有白底卡片之上，完全在綠色背景上顯示 */
+.visible-collage-group {
+    position: absolute;
+    z-index: 99;
+    pointer-events: none;
+}
+
+/* 1. 關於我區塊右側的綠色空白定位 */
+.gc-about-right {
+    right: 5%;
+    top: 22%;
+    width: 280px;
+    height: 380px;
+}
+
+/* 2. 動畫區塊左側的綠色空白定位 */
+.gc-animation-left {
+    left: 2%;
+    top: 15%;
+    width: 140px;
+    height: 200px;
+}
+
+/* 3. 聯絡我區塊上方的綠色大空白精準定位 */
+.gc-contact-top-blank {
+    left: 10%;
+    top: -70px;
+    width: 80%;
+    height: 140px;
+}
+
+/* 拼貼風蘋果基礎核心結構 */
+.collage-apple {
+    position: absolute;
+    width: 125px;
+    height: 110px;
+    border-radius: 60px 60px 65px 65px / 55px 55px 65px 65px;
+    box-shadow: inset 0 -5px 0px rgba(0, 0, 0, 0.04);
+    filter: drop-shadow(4px 4px 0px rgba(255,255,255,0.85));
+    animation: collageFloat 4.5s ease-in-out infinite alternate;
+}
+.collage-apple::after {
+    content: "";
+    position: absolute;
+    top: -9px; left: 52%;
+    width: 4px; height: 11px;
+    background-color: #B59C86;
+    transform: rotate(5deg);
+}
+.apple-leaf {
+    position: absolute;
+    top: -13px; left: 56%;
+    width: 13px; height: 8px;
+    background-color: #C0D6B5;
+    border-radius: 10px 0 10px 0;
+}
+
+/* 樣式 A：低飽和溫柔小格子配三顆小星星 */
+.apple-blue-check {
+    background-color: #D6ECF5;
+    background-image: linear-gradient(rgba(255,255,255,0.45) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.45) 1px, transparent 1px);
+    background-size: 13px 13px;
+    top: 20px;
+    left: 10px;
+    transform: rotate(-6deg);
+}
+.apple-blue-check::before {
+    content: "★ ★ ★";
+    position: absolute;
+    font-size: 0.7rem;
+    color: #89C0D2;
+    left: 50%; top: 48%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    letter-spacing: 2px;
+}
+
+/* 樣式 B：低飽和粉紅水滴雨點與白心 */
+.apple-pink-rain {
+    background-color: #FCDCE5;
+    background-image: radial-gradient(#F5A9C2 20%, transparent 20%),
+                      radial-gradient(#F5A9C2 20%, transparent 20%);
+    background-size: 16px 20px;
+    background-position: 0 0, 8px 10px;
+    bottom: 30px;
+    right: 15px;
+    animation-delay: -2s;
+    transform: rotate(7deg);
+}
+.apple-pink-rain::before {
+    content: "♡";
+    position: absolute;
+    width: 24px; height: 22px;
+    background-color: #FFF;
+    border-radius: 50% 50% 0 0;
+    transform: rotate(-45deg);
+    bottom: 20px; right: 22px;
+    font-size: 0.5rem; color: #F5A9C2;
+    display: flex; justify-content: center; align-items: center;
+    padding-bottom: 2px;
+}
+
+/* 樣式 C：鵝黃低規律圓點點與椰子樹 */
+.apple-yellow-dot {
+    background-color: #FFF5D6;
+    background-image: radial-gradient(rgba(0,0,0,0.03) 15%, transparent 15%);
+    background-size: 9px 9px;
+    top: 20px;
+    left: 10px;
+    transform: rotate(-10deg);
+}
+.apple-yellow-dot::before {
+    content: "🌴";
+    position: absolute;
+    font-size: 1.1rem;
+    bottom: 12px; left: 24px;
+}
+
+/* 聯絡我區塊專用的拼貼微調調整 (避免重疊並最大化填補綠色空白) */
+.contact-apple-1 { left: 5%; top: 10px; transform: scale(0.9) rotate(5deg); }
+.contact-apple-2 { right: 10%; top: -10px; transform: scale(0.95) rotate(-8deg); animation-delay: -1.5s; }
+
+/* 聯絡我上方獨有：手帳剪貼文字紙膠帶 */
+.collage-wavy-tape {
+    position: absolute;
+    left: 35%; top: 40px;
+    background-color: #E2F0D9;
+    color: #70915B;
+    padding: 5px 22px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    border: 1px dashed rgba(0,0,0,0.1);
+    box-shadow: 2px 3px 0px rgba(255,255,255,0.8);
+    transform: rotate(-1.5deg);
+    animation: collageFloat 5s ease-in-out infinite alternate-reverse;
+}
+
+/* 低飽和手製小花與小星星配件 */
+.collage-flower-small {
+    position: absolute;
+    font-size: 1.1rem; opacity: 0.6;
+    animation: collageFloat 3.3s infinite alternate;
+}
+.gc-about-right .collage-flower-small { bottom: 20px; left: 20px; }
+.gc-animation-left .collage-flower-small { bottom: 10px; right: 20px; color: #E27396; animation-delay: -0.7s; }
+.c-flower-1 { left: 28%; top: 20px; font-size: 1.3rem; }
+.c-flower-2 { right: 30%; bottom: 10px; font-size: 1.2rem; animation-delay: -2.2s; }
+
+.collage-star-sticker {
+    position: absolute; top: 140px; left: 120px;
+    font-size: 1.2rem; color: #FFF; background-color: #FCDCE5;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.02);
+    animation: collageFloat 3.8s infinite alternate-reverse;
+}
+
+/* 頂層拼貼元件專用絲滑浮動動畫 */
+@keyframes collageFloat {
+    0% { transform: translateY(0) rotate(-3deg); }
+    100% { transform: translateY(-12px) rotate(4deg); }
+}
+
+/* 裝飾性低飽和手繪水滴 (完好保留) */
+.collage-droplet {
+    position: absolute; width: 14px; height: 22px; background-color: #D3EBF2; border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%; opacity: 0.7; pointer-events: none; animation: collageFloat 4s ease-in-out infinite alternate-reverse;
+}
+.drop-1 { top: 12%; left: 15%; transform: rotate(-15deg); }
+.drop-2 { top: 15%; left: 17%; width: 10px; height: 16px; background-color: transparent; border: 2px solid #D3EBF2; transform: rotate(-5deg); animation-delay: -1s; }
+
+/* ==========================================================================
+   🎀 絲帶效果設定 (完好保留)
+   ========================================================================== */
+.true-continuous-ribbon {
+    position: absolute; top: 0; left: 8%; width: 16px; height: 100%; z-index: 1; pointer-events: none; opacity: 0.82;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.06) 0%, var(--pink-mist) 15%, var(--petal-rouge) 50%, #ffc3d6 75%, var(--petal-rouge) 90%, rgba(0, 0, 0, 0.08) 100%);
+    box-shadow: 4px 0 14px rgba(226, 115, 150, 0.38); transform-origin: top center;
+}
+.true-continuous-ribbon::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0px, rgba(255, 255, 255, 0.25) 10px, transparent 10px, transparent 20px);
+}
+.ribbon-integration-bow {
+    position: absolute; bottom: -35px; left: 4%; font-size: 3.5rem; z-index: 10; filter: drop-shadow(3px 5px 0px rgba(0,0,0,0.06)); animation: bowFloating 3.5s ease-in-out infinite alternate;
+}
+@keyframes bowFloating { 0% { transform: translateY(0) scale(1) rotate(-5deg); } 100% { transform: translateY(-6px) scale(1.05) rotate(5deg); } }
+
+/* ==========================================================================
+   🍰 首頁封面巨大愛心與大標題 (完好保留)
+   ========================================================================== */
+.hero-cover-section {
+    min-height: 92vh; display: flex; justify-content: center; align-items: center; position: relative; padding: 60px 20px; background: radial-gradient(circle at center, #FFFDF6 0%, var(--beige) 85%);
+}
+.cake-hero-container { text-align: center; position: relative; z-index: 5; }
+.sugar-heart-cake {
+    width: 580px; height: 480px; background-color: var(--pink-mist); margin: 0 auto 25px auto;
+    clip-path: path('M290,70 C240,15 15,15 15,180 C15,310 290,460 290,460 C290,460 565,310 565,180 C565,15 340,15 290,70 Z');
+    position: relative; border: 6px solid var(--white); display: flex; justify-content: center; align-items: center; box-shadow: 0 20px 45px rgba(226, 115, 150, 0.28); animation: cakeFloat 6s ease-in-out infinite alternate;
+}
+.cake-lace-contrast-layer {
+    position: absolute; top: 25px; left: 25px; right: 25px; bottom: 25px; background-color: rgba(255, 253, 249, 0.72); border: 3px dashed var(--petal-rouge); clip-path: path('M265,55 C220,5 10,5 10,155 C10,275 265,410 265,410 C265,410 520,275 520,155 C520,5 310,5 265,55 Z'); pointer-events: none;
+}
+.cake-cherry-top { position: absolute; top: 50px; left: 46.5%; font-size: 3.8rem; z-index: 6; }
+.portfolio-hero-title {
+    font-size: 7.5rem; color: var(--petal-rouge); position: relative; z-index: 10; margin-top: -20px; text-shadow: 4px 4px 0px var(--white), -2px -2px 0px var(--white), 2px -2px 0px var(--white), -2px 2px 0px var(--white), 8px 10px 0px rgba(239, 207, 227, 0.85);
+}
+.portfolio-hero-subtitle { font-size: 1.15rem; letter-spacing: 2px; color: #555; margin-top: 20px; font-weight: bold; }
+.scroll-down-hint { margin-top: 35px; font-size: 0.9rem; color: var(--pink-mist); font-weight: bold; animation: hintJump 1.5s infinite alternate; }
+@keyframes cakeFloat { 0% { transform: translateY(0) rotate(-0.5deg); } 100% { transform: translateY(-18px) rotate(1.5deg); } }
+@keyframes hintJump { 0% { transform: translateY(0); opacity: 0.4; } 100% { transform: translateY(8px); opacity: 1; } }
+
+/* ==========================================================================
+   貼紙化導覽選單 (完好保留)
+   ========================================================================== */
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background-color: rgba(236, 242, 216, 0.94); position: sticky; top: 0; z-index: 1000; }
+.nav-logo { font-size: 2.2rem; }
+.nav-links { display: flex; list-style: none; gap: 15px; }
+.nav-item-sticker {
+    text-decoration: none; color: var(--text-dark); font-weight: bold; font-size: 0.95rem; padding: 8px 18px; background-color: var(--white); border: 2px dashed var(--pink-mist); border-radius: 20px; box-shadow: 2px 2px 0px var(--petal-frost); display: inline-block; transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s, background-color 0.25s;
+}
+.nav-item-sticker:hover { transform: scale(1.1) rotate(3deg); background-color: var(--petal-frost); color: var(--text-dark); box-shadow: 4px 4px 0px var(--petal-rouge); }
+.nav-item-sticker:active { transform: scale(0.95); box-shadow: 1px 1px 0px var(--pink-mist); }
+
+/* 其他手帳小塗鴉與游標 */
+.corner-illustration { position: absolute; font-size: 2.2rem; color: var(--petal-rouge); opacity: 0.65; user-select: none; pointer-events: none; z-index: 2; font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; filter: drop-shadow(2px 2px 0px rgba(255,255,255,0.8)); animation: floatingDoodle 4s ease-in-out infinite alternate; }
+.doodle-cherry { top: 12%; right: 7%; }
+.doodle-star-1 { top: 28%; left: 3%; font-size: 3rem; color: var(--pink-mist); }
+.doodle-heart-1 { top: 42%; right: 5%; font-size: 2.5rem; animation-delay: 0.5s; }
+.doodle-sparkle { top: 58%; left: 4%; color: var(--petal-frost); }
+.doodle-strawberry { top: 72%; right: 8%; animation-delay: 1s; }
+.doodle-star-2 { bottom: 22%; left: 5%; font-size: 2.8rem; }
+.doodle-heart-2 { bottom: 14%; right: 4%; color: var(--pink-mist); }
+.doodle-ribbon-end { bottom: 3%; left: 6%; font-size: 3rem; }
+@keyframes floatingDoodle { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-10px) rotate(8deg); } }
+
+.custom-cursor { width: 24px; height: 24px; position: fixed; pointer-events: none; z-index: 100000; background: var(--petal-rouge); clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%); transform: translate(-50%, -50%); transition: transform 0.1s ease-out, background-color 0.3s; }
+.custom-cursor.active { transform: translate(-50%, -50%) scale(0.7); background-color: var(--light-blue); }
+.cursive-title { font-family: 'Alex Brush', cursive; font-weight: normal; }
+.hidden { display: none !important; }
+
+/* 滾動淡入 */
+.fade-in-section { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), transform 0.9s cubic-bezier(0.25, 1, 0.5, 1); }
+.fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+
+/* 開場信封樣式 */
+.envelope-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #4A4646; display: flex; justify-content: center; align-items: center; z-index: 99999; transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+.envelope-wrapper { position: relative; width: 450px; height: 300px; background-color: var(--pink-mist); border-radius: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); perspective: 1000px; }
+.flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 225px solid transparent; border-right: 225px solid transparent; border-top: 150px solid var(--petal-rouge); transform-origin: top; transition: transform 0.6s ease; z-index: 3; }
+.paper-letter { position: absolute; bottom: 10px; left: 15px; width: 420px; height: 280px; background-color: #FFFDF9; padding: 40px 20px; text-align: center; border-radius: 4px; box-shadow: inset 0 0 15px rgba(0,0,0,0.05); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2; }
+.paper-letter h1 { font-size: 3rem; margin-bottom: 5px; }
+.envelope-sub { font-size: 0.9rem; color: #777; letter-spacing: 1px; margin-bottom: 25px; }
+.open-button { background-color: var(--petal-rouge); color: var(--white); border: none; padding: 10px 30px; font-size: 1rem; font-weight: bold; border-radius: 20px; box-shadow: 0 4px 10px rgba(226, 115, 150, 0.3); transition: all 0.3s ease; }
+.open-button:hover { background-color: var(--pink-mist); transform: scale(1.05); }
+.envelope-container.open .flap { transform: rotateX(180deg); z-index: 1; }
+.envelope-container.open .paper-letter { transform: translateY(-140px) rotate(-2deg) scale(1.05); z-index: 4; }
+.envelope-container.fade-out { opacity: 0; pointer-events: none; }
+
+/* 手帳紙張基本架構 */
+.scrapbook-section { padding: 80px 8%; position: relative; background-color: transparent; z-index: 2; }
+.notebook-page { background: var(--white); padding: 45px; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); position: relative; border: 1px solid rgba(0,0,0,0.03); z-index: 3; }
+.deco-paperclip { position: absolute; top: -15px; right: 40px; font-size: 2.2rem; transform: rotate(15deg); z-index: 3; }
+.deco-tape { position: absolute; top: -12px; left: 50%; transform: translateX(-50%) rotate(-1deg); background-color: rgba(179, 222, 226, 0.85); color: #555; padding: 4px 20px; font-size: 0.85rem; font-weight: bold; letter-spacing: 2px; }
+.section-title { font-size: 3.5rem; text-align: center; margin-bottom: 20px; }
+
+/* 一、關於我排版 */
+.about-flex-container { display: flex; gap: 40px; align-items: center; }
+.about-text { flex: 1.8; }
+.chinese-heading { font-size: 2rem; margin-bottom: 15px; }
+.en-sub { font-size: 1.1rem; color: var(--pink-mist); font-weight: normal; }
+.bio-paragraph { font-size: 1.05rem; line-height: 1.85; margin-bottom: 25px; text-align: justify; }
+.award-box { background-color: var(--beige); padding: 15px 20px; border-radius: 4px; border-left: 5px solid var(--petal-rouge); }
+.award-badge { background-color: var(--petal-rouge); color: var(--white); padding: 3px 8px; font-size: 0.8rem; border-radius: 3px; font-weight: bold; display: inline-block; margin-bottom: 8px; }
+.award-content { font-size: 0.95rem; font-weight: bold; }
+.profile-photo-frame { background-color: var(--white); padding: 12px 12px 40px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); transform: rotate(3deg); border: 1px solid #eee; position: relative; }
+.photo-placeholder-blue { width: 220px; aspect-ratio: 3/4; background-color: var(--light-blue); display: flex; justify-content: center; align-items: center; color: #4A6E72; font-weight: bold; font-size: 0.9rem; }
+
+/* 二、電繪作品跑馬燈 */
+.section-header-center { text-align: center; margin-bottom: 30px; }
+.section-subtitle-cn { font-size: 1rem; color: #666; font-weight: bold; }
+.marquee-container { width: 100%; overflow: hidden; padding: 20px 0; mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
+.marquee-track { display: flex; gap: 30px; width: max-content; animation: marqueeContinuous 28s linear infinite; }
+.marquee-container:hover .marquee-track { animation-play-state: paused; }
+.art-card { background: var(--white); padding: 12px; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+.art-card:hover { transform: translateY(-10px) scale(1.05); }
+.art-card.landscape { width: 280px; height: 210px; }
+.art-card.portrait { width: 210px; height: 280px; }
+.media-box { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; color: var(--white); font-weight: bold; font-size: 0.9rem; border-radius: 2px; }
+.p-rouge { background-color: var(--petal-rouge); }
+.p-mist { background-color: var(--pink-mist); }
+.p-frost { background-color: var(--petal-frost); }
+.l-blue { background-color: var(--light-blue); }
+@keyframes marqueeContinuous { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* 三、動畫作品 */
+.animation-paper { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
+.anim-main-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 5px; }
+.anim-subtitle { font-size: 1rem; margin-bottom: 25px; color: #666; font-weight: bold; }
+.video-ratio-container { width: 100%; aspect-ratio: 5 / 3; background-color: #333; border-radius: 4px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); }
+.video-ratio-container video { width: 100%; height: 100%; object-fit: cover; }
+
+/* 四、繪本作品 */
+.book-paper { max-width: 850px; margin: 0 auto; }
+.book-info { text-align: center; margin-bottom: 20px; }
+.book-main-title { font-size: 1.8rem; }
+.book-sub { font-size: 1.1rem; color: #555; }
+.book-meta { font-size: 0.9rem; color: #777; margin-top: 5px; }
+.fade-in-section.is-visible .animate-book .book-container { transform: scale(1) rotateX(0deg); opacity: 1; }
+.book-simulator { display: flex; justify-content: center; margin: 30px 0; perspective: 1200px; }
+.book-container { width: 100%; max-width: 760px; aspect-ratio: 2.6 / 1; display: flex; background: #FFF; box-shadow: 0 15px 35px rgba(0,0,0,0.06); transform: scale(0.96); opacity: 0; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s; }
+.book-page { flex: 1; padding: 25px; display: flex; align-items: center; justify-content: center; background-color: #FDFDFD; transition: opacity 0.3s, transform 0.3s; }
+.left-page { border-right: 1px solid #EAEAEA; }
+.page-content { width: 100%; height: 100%; border: 1px dashed var(--petal-frost); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; }
+.font-cover { background-color: var(--pink-mist); color: var(--white); }
+.font-cover h4 { font-size: 1.8rem; margin-bottom: 8px; }
+.inner-page-placeholder { width: 100%; height: 85%; background-color: var(--beige); display: flex; justify-content: center; align-items: center; color: #555; font-size: 0.9rem; }
+.page-num-display { font-size: 0.8rem; color: #999; margin-bottom: 5px; }
+
+.book-controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 15px; }
+.cute-sticker-btn { background-color: var(--petal-frost); color: var(--text-dark); border: 2px dashed var(--petal-rouge); padding: 10px 24px; font-size: 1rem; font-weight: bold; border-radius: 30px; box-shadow: 3px 3px 0px var(--pink-mist); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s; }
+.cute-sticker-btn:hover { transform: scale(1.08) rotate(-2deg); background-color: var(--white); box-shadow: 5px 5px 0px var(--petal-rouge); }
+.cute-sticker-btn:active { transform: scale(0.95); box-shadow: 1px 1px 0px var(--pink-mist); }
+.btn-star { display: inline-block; color: var(--petal-rouge); font-size: 0.9rem; }
+.cute-page-badge { background-color: var(--light-blue); color: #3e5c60; padding: 6px 16px; font-weight: bold; font-size: 0.9rem; border-radius: 12px; transform: rotate(1deg); }
+
+/* 五、聯絡我 */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+.sticky-note { background-color: #FFFDF3; padding: 30px 20px; text-align: center; box-shadow: 2px 10px 20px rgba(0,0,0,0.03); position: relative; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15); }
+.card-clip { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; }
+.note-1 { transform: rotate(-2deg); border-bottom: 4px solid var(--petal-rouge); }
+.note-2 { transform: rotate(3deg); border-bottom: 4px solid var(--pink-mist); }
+.note-3 { transform: rotate(-3deg); border-bottom: 4px solid var(--petal-frost); }
+.note-4 { transform: rotate(2deg); border-bottom: 4px solid var(--light-blue); }
+.sticky-note:hover { transform: translateY(-10px) scale(1.03) rotate(0deg); }
+.sticky-note .icon { font-size: 2.5rem; margin-bottom: 10px; }
+.sticky-note h4 { font-size: 1.1rem; margin-bottom: 8px; }
+.sticky-note p { font-size: 0.95rem; font-weight: bold; }
+.sticky-note a { color: var(--petal-rouge); text-decoration: none; }
+
+.site-footer { text-align: center; padding: 35px; background-color: var(--pink-mist); color: var(--white); font-size: 0.9rem; margin-top: 40px; }
+
+/* 響應式調整 */
+@media (max-width: 1200px) {
+    /* 窄螢幕平板下微調位置或隱飾 */
+    .gc-about-right, .gc-contact-top-blank { display: none !important; }
+}
+@media (max-width: 768px) {
+    * { cursor: auto !important; }
+    .custom-cursor, .true-continuous-ribbon, .collage-droplet, .visible-collage-group { display: none !important; }
+    .navbar { flex-direction: column; gap: 15px; padding: 15px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .sugar-heart-cake { width: 330px; height: 280px; clip-path: none; border-radius: 20px; }
+    .cake-lace-contrast-layer { clip-path: none; border-radius: 15px; }
+    .portfolio-hero-title { font-size: 3.5rem; }
+    .section-title { font-size: 2.5rem; }
+    .about-flex-container { flex-direction: column; }
+    .book-container { aspect-ratio: 1.3 / 1; }
+    .left-page { display: none; }
+    .envelope-wrapper { width: 320px; height: 220px; }
+    .flap { border-left: 160px solid transparent; border-right: 160px solid transparent; border-top: 110px solid var(--petal-rouge); }
+    .paper-letter { width: 290px; height: 200px; padding: 20px 10px; }
+    .paper-letter h1 { font-size: 2.2rem; }
+}
